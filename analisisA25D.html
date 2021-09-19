@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <!--<meta charset="utf-8">-->
+        <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+
+        <title>Proyecto Web 3 Calculo </title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+       
+       
+       
+        <!--<meta name="description" content="An interactive getting started guide for Brackets.">-->
+        <!--<link rel="stylesheet" href="main.css">-->
+
+        
+
+    <script language="javascript" type="text/javascript" src="static/js/dbmfunctions.js"></script>
+    <!--<script language="javascript" type="text/javascript" src="static/js/dbmfiles.js"></script>-->
+    <script language="javascript" type="text/javascript" src="FileSaver.js"></script>
+    
+    
+     <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+    <script language="javascript" type="text/javascript" >
+
+        
+        function download(filename, text) 
+        {
+            var pom = document.createElement('a');
+            pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            pom.setAttribute('download', filename);
+
+            if (document.createEvent) {
+                var event = document.createEvent('MouseEvents');
+                event.initEvent('click', true, true);
+                pom.dispatchEvent(event);
+            }
+            else {
+                pom.click();
+            }
+            
+
+        }
+
+        function MetExe01()
+{// inicio de funcion
+	var infoMHz01 = new Array (9);  //Frecuencia Inicial
+	var infoMHz02 = new Array (9);  //Frecuencia Central
+	var infoMHz03 = new Array (9);  //Frecuencia Final
+	var infoMHz04 = new Array (9);  //Potencia
+	var infoMHz05 = new Array (9);  //Unidades
+	var infoMHz06 = new Array (9);  //G.ant.
+	var infoMHz07 = new Array (9);  //Error en linea de entrada
+	
+	
+	var iCasosAnt=0;
+	var iCasos = 0;
+	var rstMHz01 = new Array (21);  //Rango
+	var rstMHz02 = new Array (21);  //Potencia Watts
+	var rstMHz03 = new Array (21);  //Potencia dBm
+	var rstMHz04 = new Array (21);  //Limite dBm
+	var rstMHz05 = new Array (21);  //Estado
+	var rstMHz06 = new Array (21);  //Criterio
+	var rstMHz07 = new Array (21);  //Error en linea de salida
+
+	//fini02.value=infoMHz[1,1];
+	/*Capturando valores de frecuencia iniciales*/
+	infoMHz01[1]=fini01.value*1;  infoMHz03[1]=ffin01.value*1; infoMHz04[1]=pot01.value*1; infoMHz05[1]=unid01.value*1; infoMHz06[1]=gant01.value*1;
+	infoMHz01[2]=fini02.value*1;  infoMHz03[2]=ffin02.value*1; infoMHz04[2]=pot02.value*1; infoMHz05[2]=unid02.value*1; infoMHz06[2]=gant02.value*1;
+	infoMHz01[3]=fini03.value*1;  infoMHz03[3]=ffin03.value*1; infoMHz04[3]=pot03.value*1; infoMHz05[3]=unid03.value*1; infoMHz06[3]=gant03.value*1;
+	infoMHz01[4]=fini04.value*1;  infoMHz03[4]=ffin04.value*1; infoMHz04[4]=pot04.value*1; infoMHz05[4]=unid04.value*1; infoMHz06[4]=gant04.value*1;
+	infoMHz01[5]=fini05.value*1;  infoMHz03[5]=ffin05.value*1; infoMHz04[5]=pot05.value*1; infoMHz05[5]=unid05.value*1; infoMHz06[5]=gant05.value*1;
+	infoMHz01[6]=fini06.value*1;  infoMHz03[6]=ffin06.value*1; infoMHz04[6]=pot06.value*1; infoMHz05[6]=unid06.value*1; infoMHz06[6]=gant06.value*1;
+	infoMHz01[7]=fini07.value*1;  infoMHz03[7]=ffin07.value*1; infoMHz04[7]=pot07.value*1; infoMHz05[7]=unid07.value*1; infoMHz06[7]=gant07.value*1;
+	infoMHz01[8]=fini08.value*1;  infoMHz03[8]=ffin08.value*1; infoMHz04[8]=pot08.value*1; infoMHz05[8]=unid08.value*1; infoMHz06[8]=gant08.value*1;
+	infoMHz01[9]=fini09.value*1;  infoMHz03[9]=ffin09.value*1; infoMHz04[9]=pot09.value*1; infoMHz05[9]=unid09.value*1; infoMHz06[9]=gant09.value*1;
+
+	// Tabla de Frecuencias
+
+	var TF = [['Index','Frecuencia Inicial','Frecuencia Final','Formula 1','Constante 1','Formula 2','Constante 2','Constante 3','Formula 3','Constante 4','Constante 5','Formula 4 Linear Interpolation','Constante 6','Constante 7','Formula 5 Extra','Constante 8','Constante 9','Consideracion'],
+	[1,3155,3200,1,12.15,0,0,0,0,0,0,0,0,0,0,0,0,'inciso a) Se limita para el uso exclusivo de los dispositivos de potencia, para personas de La potencia establecida es UIT-R M.1076.'],
+[2,6765,6795,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'inciso a) Unicamente para dispositivos médicos implantables de potencia extremadamente reducida, de conformidad con la Recomendación UIT-R RS.1346'],
+[3,13553,13567,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'inciso a)'],
+[4,26957,27283,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'inciso a)'],
+[5,40660,40700,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'inciso a)'],
+[6,402,405,1,-16,0,0,0,0,0,0,0,0,0,0,0,0,'inciso a)'],
+[7,433.05,434.79,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'inciso a)'],
+[8,2400,2500,1,36,0,0,0,0,0,0,0,0,0,0,0,0,'inciso a)'],
+[9,5150,5350,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'inciso a)'],
+[10,5470,5725,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'inciso a)'],
+[11,5725,5875,1,36,0,0,0,0,0,0,0,0,0,0,0,0,'inciso a)'],
+[12,24000,24250,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'inciso a)'],
+[13,57000,64000,1,43,0,0,0,0,0,0,0,0,0,0,0,0,'inciso a) Se limita a su utilización en sistemas de redes inalámbrica de área personal (WPAN, por sus siglas en inglés)'],
+[14,76000,77000,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'inciso a)'],
+[15,122000,123000,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'inciso a)'],
+[16,244000,246000,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'inciso a)'],
+[17,920.5,934.5,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'inciso b)'],
+[18,0.009,0.045,1,40,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Cable location equipment'],
+[19,0.045,0.119,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Cable location equipment'],
+[20,0.119,0.135,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Cable location equipment'],
+[21,0.119,0.135,0,0,1,2400,300,0,0,0,0,0,0,0,0,0,'tabla 25 RFID'],
+[22,0.135,0.49,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Cable location equipment'],
+[23,13.11,13.36,1,-14.7,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 RFID'],
+[24,13.41,14.01,1,-14.7,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 RFID'],
+[25,26.96,26.995,1,-15.23,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Any (carrier)'],
+[26,26.96,26.995,1,-41.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Any'],
+[27,26.995,27.255,1,-15.23,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Any (carrier)'],
+[28,26.995,27.255,1,-41.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Any'],
+[29,26.995,27.255,1,36.0205,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Unidirectional Telecommand, at transmitter output'],
+[30,27.255,27.28,1,-15.23,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Any (carrier)'],
+[31,27.255,27.28,1,-41.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Any'],
+[32,40.66,40.7,1,-28.19,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signal'],
+[33,40.66,40.7,1,-35.23,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[34,40.66,40.7,1,-35.23,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Any'],
+[35,40.66,40.7,1,-41.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Perimeter protection systems'],
+[36,43.7,47,1,-15.23,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Audio, Video or Monitorring Systems'],
+[37,48.7,49.82,1,-15.23,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Audio, Video or Monitorring Systems'],
+[38,49.82,49.9,1,-15.23,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Any (carrier)'],
+[39,49.82,49.9,1,-41.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Any'],
+[40,49.82,49.9,1,-15.23,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Audio, Video or Monitorring Systems'],
+[41,49.9,50,1,-41.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Audio, Video or Monitorring Systems'],
+[42,50.8,50.98,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Unidirectional Telecommand, at transmitter output'],
+[43,53.1,53.8,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Unidirectional Telecommand, at transmitter output'],
+[44,54,70,1,-55.23,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Exclusively non/residential perimeter protection systems'],
+[45,54,70,1,16.9897,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Wireless microphone, at the antenna input connector'],
+[46,70,72,1,-14.72,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[47,70,72,1,-41.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[48,70,72,1,-55.23,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Exclusively non/residential perimeter protection systems'],
+[49,70,72,1,16.9897,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Wireless microphone, at the antenna input connector'],
+[50,72,72.01,1,19.03,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Audio, Video or Monitorring Systems'],
+[51,72,72.01,1,-33.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[52,72,72.01,1,-41.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[53,72.01,72.99,1,19.03,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Audio, Video or Monitorring Systems'],
+[54,72.01,72.99,1,-33.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[55,72.01,72.99,1,-41.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[56,72.01,72.99,1,28.7506,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Unidirectional Telecommand, at transmitter output'],
+[57,72.99,73,1,19.03,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Audio, Video or Monitorring Systems'],
+[58,72.99,73,1,-33.2917,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[59,72.99,73,1,-41.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[60,73,74.6,1,-33.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[61,73,74.6,1,-41.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[62,74.6,74.8,1,19.03,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Audio, Video or Monitorring Systems'],
+[63,74.6,74.8,1,-33.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[64,74.6,74.8,1,-42.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[65,74.8,75.2,1,-33.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[66,74.8,75.2,1,-41.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[67,75.2,75.41,1,19.03,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Audio, Video or Monitorring Systems'],
+[68,75.2,75.41,1,-33.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[69,75.2,75.41,1,-41.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[70,75.41,75.99,1,19.03,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Audio, Video or Monitorring Systems'],
+[71,75.41,75.99,1,-33.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[72,75.41,75.99,1,-41.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[73,75.41,75.99,1,28.75,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Unidirectional Telecommand, at transmitter output'],
+[74,75.99,76,1,19.03,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Audio, Video or Monitorring Systems'],
+[75,75.99,76,1,-33.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[76,75.99,76,1,-41.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[77,76,88,1,-33.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[78,76,88,1,-41.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[79,76,88,1,-55.23,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Exclusively non/residential perimeter protection systems'],
+[80,76,88,1,-78.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Wireless microphone, at the antenna input connector'],
+[81,88,108,1,-47.28,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Audio, Video or Monitorring Systems'],
+[82,88,108,1,-33.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[83,88,108,1,-41.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[84,108,130,1,-33.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[85,108,130,1,-41.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[86,130,174,0,0,0,0,0,1,108,56.8181818181818,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[87,130,174,0,0,0,0,0,1,108,22.7272727272727,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[88,174,216,1,-23.74,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[89,174,216,1,-31.71,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[90,174,216,1,16.98,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Wireless microphone, at the antenna input connector'],
+[91,174,216,1,-31.71,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Biomedical Telemetry'],
+[92,216,255,1,-23.74,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[93,216,255,1,-31.71,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[94,225,260,1,27.63,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Audio, Video or Monitorring Systems (indoor only)'],
+[95,225,260,1,-23.74,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[96,225,260,1,-31.71,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[97,260,270,1,27.63,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Audio, Video or Monitorring Systems (indoor only)'],
+[98,260,270,0,0,0,0,0,1,170,41.6666666666667,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[99,260,270,0,0,0,0,0,1,170,16.6666666666667,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[100,270,401,0,0,0,0,0,1,170,41.666666,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[101,270,401,0,0,0,0,0,1,170,16.666666,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[102,401,405.9,0,0,0,0,0,1,0,0,0,0,0,0,0,0,'tabla 25 Medical Applied Systems VER SM 2153-7'],
+[103,401,405.9,0,0,0,0,0,1,170,41.6666666666667,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[104,401,405.9,0,0,0,0,0,0,170,16.6666666666667,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[105,405.9,433,0,0,0,0,0,1,170,41.66666,0,0,0,0,0,0,'tabla 25 Intermittent control signal'],
+[106,405.9,433,0,0,0,0,0,1,170,16.66666,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[107,433,433.5,0,0,0,0,0,1,170,41.6666666666667,0,0,0,0,0,0,'tabla 25 Intermittent control signal'],
+[108,433,433.5,0,0,0,0,0,1,170,16.6666666666667,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[109,433,433.5,1,10,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Any'],
+[110,433.5,434.5,0,0,0,0,0,1,170,41.6666666666667,0,0,0,0,0,0,'tabla 25 Intermittent control signal'],
+[111,433.5,434.5,0,0,0,0,0,1,170,16.6666666666667,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[112,433.5,434.5,1,1.709,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 RFID'],
+[113,433.5,434.5,1,10,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Any'],
+[114,434.5,435,0,0,0,0,0,1,170,41.6666666666667,0,0,0,0,0,0,'tabla 25 Intermittent control signal'],
+[115,434.5,435,0,0,0,0,0,1,170,16.6666666666667,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[116,434.5,435,1,10,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Any'],
+[117,435,462.53,0,0,0,0,0,1,170,41.6666666666667,0,0,0,0,0,0,'tabla 25 Intermittent control signal'],
+[118,435,462.53,0,0,0,0,0,1,170,16.6666666666667,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[119,462.53,462.74,0,0,0,0,0,1,170,41.6666666666667,0,0,0,0,0,0,'tabla 25 Intermittent control signal'],
+[120,462.53,462.74,0,0,0,0,0,1,170,16.6666666666667,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[121,462.53,462.74,1,26.9897,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 General usage radio equipment ERP'],
+[122,462.74,467.53,0,0,0,0,0,1,170,41.6666666666667,0,0,0,0,0,0,'tabla 25 Intermittent control signal'],
+[123,462.74,467.53,0,0,0,0,0,1,170,16.6666666666667,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[124,467.53,467.74,0,0,0,0,0,1,170,41.6666666666667,0,0,0,0,0,0,'tabla 25 Intermittent control signal'],
+[125,467.53,467.74,0,0,0,0,0,1,170,16.6666666666667,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[126,467.53,467.74,1,26.98,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 General usage radio equipment'],
+[127,467.74,470,0,0,0,0,0,1,170,41.6666666666667,0,0,0,0,0,0,'tabla 25 Intermittent control signal'],
+[128,467.74,470,0,0,0,0,0,1,170,16.6666666666667,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[129,470,512,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signal'],
+[130,470,512,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[131,470,512,1,23.97,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Wireless microphone, at the antenna input connector'],
+[132,512,566,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[133,512,566,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[134,512,566,1,10.79,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Biomedical Telemetry devices for hospitals'],
+[135,512,566,1,23.97,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Wireless microphone, at the antenna input connector'],
+[136,566,608,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[137,566,608,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[138,566,608,1,23.97,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Wireless microphone, at the antenna input connector'],
+[139,614,698,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[140,614,698,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[141,614,698,1,23.97,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Wireless microphone, at the antenna input connector'],
+[142,698,860,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[143,698,860,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[144,860,864,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[145,860,864,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[146,860,864,1,1.716299999,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 RFID'],
+[147,864,868,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[148,864,868,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[149,864,868,1,1.716299999,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 RFID'],
+[150,864,868,1,23.97,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Audio, Video or Monitoring Systems, at the transmitter output'],
+[151,868,869,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[152,868,869,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[153,868,869,1,1.716299999,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 RFID'],
+[154,868,890,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[155,868,890,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[156,890,902,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[157,890,902,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[158,890,902,1,-1.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Signals used to measure the characteristics of a material'],
+[159,902,907.5,1,-1.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Audio, Video or Monitoring Systems'],
+[160,902,907.5,1,18.73,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Field disturbance sensors'],
+[161,902,907.5,1,-1.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Signals used to measure the characteristics of a material'],
+[162,902,907.5,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[163,902,907.5,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[164,902,907.5,1,23.97,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Spread spectrum transmitters'],
+[165,902,907.5,1,1.7163,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 RFID'],
+[166,915,928,1,-1.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Audio, Video or Monitoring Systems'],
+[167,915,928,1,18.73,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Field disturbance sensors'],
+[168,915,928,1,-1.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Signals used to measure the characteristics of a material'],
+[169,915,928,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[170,915,928,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[171,915,928,1,23.97,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Spread spectrum transmitters VER SM 2153-7'],
+[172,915,928,1,1.7163,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 RFID'],
+[173,928,940,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[174,928,940,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[175,928,940,1,-1.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Signals used to measure the characteristics of a material'],
+[176,944,948,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[177,944,948,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[178,944,948,1,23.97,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Signals used to measure the characteristics of a material'],
+[179,1910,1920,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[180,1910,1920,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[181,1910,1920,1,23.97,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Audio, Video or Monitoring Systems, at the transmitter output'],
+[182,2400,2435,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[183,2400,2435,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[184,2400,2435,1,-1.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 RFID'],
+[185,2400,2435,1,23.97,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Spread spectrum or OFDM transmitters VER SM 2153-7'],
+[186,2435,2465,1,18.73,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Field disturbance sensors'],
+[187,2435,2465,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[188,2435,2465,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[189,2435,2465,1,-1.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 RFID'],
+[190,2435,2465,1,23.97,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Spread spectrum or OFDM transmitters VER SM 2153-7'],
+[191,2465,2483.5,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[192,2465,2483.5,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[193,2465,2483.5,1,-1.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 RFID'],
+[194,2465,2483.5,1,23.97,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Spread spectrum or OFDM transmitters VER SM 2153-7'],
+[195,2900,3100,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[196,2900,3100,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[197,3100,5150,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[198,3100,5150,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[199,3100,5150,1,0,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 UWB VER SM 2153-7'],
+[200,5150,5350,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[201,5150,5350,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[202,5150,5350,1,23.01,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Indoor RLAN'],
+[203,5150,5350,1,0,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 UWB VER SM 2153-7'],
+[204,5460,5470,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[205,5460,5470,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[206,5460,5470,1,0,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 UWB VER SM 2153-7'],
+[207,5470,5725,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[208,5470,5725,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[209,5470,5725,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Indoor RLAN'],
+[210,5470,5725,1,0,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 UWB VER SM 2153-7'],
+[211,5725,5785,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[212,5725,5785,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[213,5725,5785,1,-1.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Indoor RLAN'],
+[214,5725,5785,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Spread spectrum, at the transmitter output'],
+[215,5725,5785,1,0,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 UWB VER SM 2153-7'],
+[216,5785,5815,1,18.73,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Field disturbance sensors'],
+[217,5785,5815,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[218,5785,5815,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[219,5785,5815,1,-1.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 RFID'],
+[220,5785,5815,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Spread spectrum, at the transmitter output'],
+[221,5785,5815,1,0,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 UWB VER SM 2153-7'],
+[222,5815,5850,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[223,5815,5850,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[224,5815,5850,1,-1.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Indoor RLAN'],
+[225,5815,5850,1,30,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Spread spectrum, at the transmitter output'],
+[226,5815,5850,1,0,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 UWB VER SM 2153-7'],
+[227,5850,10.5,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[228,5850,10.5,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[229,5850,10.5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 UWB VER SM 2153-7'],
+[230,10500,10550,1,32.72,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Field disturbance sensors'],
+[231,10500,10550,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[232,10500,10550,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[233,10500,10550,1,0,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 UWB VER SM 2153-7'],
+[234,10550,10600,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[235,10550,10600,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[236,10550,10600,1,0,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 UWB VER SM 2153-7'],
+[237,18820,19165,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[238,18820,19165,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[239,19156.5,19233.5,1,20,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Any P-MP radio systems'],
+[240,19156.5,19233.5,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[241,19156.5,19233.5,1,-25.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[242,19233.5,19260,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[243,19233.5,19260,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[244,22000,24075,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[245,22000,24075,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[246,22000,24075,1,0,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 UWB VER SM 2153-7'],
+[247,24075,24175,1,32.72,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Field disturbance sensors'],
+[248,24075,24175,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[249,24075,24175,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[250,24075,24175,1,0,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 UWB VER SM 2153-7'],
+[251,24175,29000,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[252,24175,29000,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[253,24175,29000,1,0,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 UWB VER SM 2153-7'],
+[254,46700,46900,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[255,46700,46900,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[256,46700,46900,1,0,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Vehicle-mounted field disturbance sensors'],
+[257,57000,64000,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[258,57000,64000,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[259,76000,77000,1,26.0205,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Vehicle-mounted field disturbance sensors/ ver tabla'],
+[260,76000,77000,1,-13.29,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[261,76000,77000,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[262,77500,78000,1,-13.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Intermittent control signals'],
+[263,77500,78000,1,-21.25,0,0,0,0,0,0,0,0,0,0,0,0,'tabla 25 Periodic transmissions'],
+[264,0.009,0.49,0,0,1,2400,300,0,0,0,0,0,0,0,0,0,'inciso d)'],
+[265,0.49,1.705,0,0,1,24000,30,0,0,0,0,0,0,0,0,0,'inciso d)'],
+[266,1.705,30,1,-25.68,0,0,0,0,0,0,0,0,0,0,0,0,'inciso d)'],
+[267,30,88,1,-55.23,0,0,0,0,0,0,0,0,0,0,0,0,'inciso d)'],
+[268,88,216,1,-54.71,0,0,0,0,0,0,0,0,0,0,0,0,'inciso d)'],
+[269,216,960,1,-49.21,0,0,0,0,0,0,0,0,0,0,0,0,'inciso d)'],
+[270,960,999000,1,-41.25,0,0,0,0,0,0,0,0,0,0,0,0,'inciso d)']
+	]
+	var iCantTF = 270;
+ 
+		
+		iCasos=0;
+		iCasosAnt=0;
+		irstMHz=0;
+
+		for (i_a =1;i_a<=9;i_a++) 
+		{
+			
+			for(iCasos=1;iCasos<=iCantTF;iCasos++)
+			/*formvalida=TF[iCasos][3]+TF[iCasos][5]+TF[iCasos][8];*/
+			if (
+				(TF[iCasos][1])<=infoMHz01[i_a]&& infoMHz01[i_a]<=(TF[iCasos][2]) &&
+				(TF[iCasos][1])<=infoMHz03[i_a]&& infoMHz03[i_a]<=(TF[iCasos][2]) && (infoMHz01[i_a] <= infoMHz03[i_a]) 
+				
+				)
+				if(((TF[iCasos][3])+(TF[iCasos][5])+(TF[iCasos][8]))>0.5)
+				{
+					irstMHz=irstMHz+1;
+					// 01 Rango de frecuencia
+					if ( infoMHz01[i_a] == infoMHz03[i_a])   
+					{                               
+						rstMHz01[irstMHz]=infoMHz01[i_a];
+					}
+					else
+					{
+						rstMHz01[irstMHz]=infoMHz01[i_a] + " a " + infoMHz03[i_a];
+					} 
+
+					// 02 y 03 Potencia del equipo en Watts y dBm
+					if (infoMHz05[i_a] ==1)
+					{
+						ax=10*Math.log10(infoMHz04[i_a]/0.001)+infoMHz06[i_a];
+						rstMHz02[irstMHz]=(1/1000)*Math.pow(10,ax/10); //Potencia en Watts
+						rstMHz03[irstMHz]=ax; //Potencia en dBm
+					}
+					if (infoMHz05[i_a] ==2)
+					{
+						ax=infoMHz04[i_a]+infoMHz06[i_a];
+						rstMHz03[irstMHz]=ax;                          //Potencia en dBm
+						rstMHz02[irstMHz]=(1/1000)*Math.pow(10,ax/10); //Potencia en Watts
+					}
+					if (infoMHz05[i_a] ==3)
+					{   
+						ax=infoMHz04[i_a] -95.23+infoMHz06[i_a];
+						rstMHz03[irstMHz]=ax;                          //Potencia en dBm
+						rstMHz02[irstMHz]=(1/1000)*Math.pow(10,ax/10); //Potencia en Watts
+					}
+					if (infoMHz05[i_a] ==4)
+					{						
+						ax=infoMHz04[i_a] -43.73+infoMHz06[i_a];
+						rstMHz03[irstMHz]=ax;                          //Potencia en dBm
+						rstMHz02[irstMHz]=(1/1000)*Math.pow(10,ax/10); //Potencia en Watts
+					}
+					
+					//04 Limite dBm EIRP
+					
+					//Primera Formula
+					a1=0
+					if (TF[iCasos][3]==1)
+					{
+						a1=(TF[iCasos][3])*(TF[iCasos][4]);
+					}
+					//Segunda Formula
+					a2=0;
+					if (TF[iCasos][5]==1)
+					{
+						a2=(TF[iCasos][5])*(20*Math.log10(((TF[iCasos][6])/(1000*infoMHz03[i_a])))+40*Math.log10(((TF[iCasos][7])/3))-95.23);
+					}
+
+					//tercera formula
+					a3=0;
+					if (TF[iCasos][8]==1)
+					{
+						a3=(TF[iCasos][8])*1234/*(20*Math.log10((((infoMHz03[i_a]-TF[iCasos][9])* TF[iCasos][10])))-95.23)*/;
+					}
+
+					/**/
+					rstMHz04[irstMHz]= a1+a2+a3;
+
+					ax=rstMHz03[irstMHz];
+					bx=rstMHz04[irstMHz];
+					if (ax <= bx)
+					{   
+						rstMHz05[irstMHz]="Pasa";
+					}                     
+					else
+					{
+						rstMHz05[irstMHz]="No Pasa";
+					}
+
+
+
+
+
+
+
+					/*Critero Inciso*/
+					rstMHz06[irstMHz]=(TF[iCasos][17]);
+				
+
+
+
+
+
+
+
+
+				
+				/*(TF[iCasos][1])<=infoMHz01[i_a] && infoMHz01[i_a]<=(TF[iCasos][2]) &&
+				(TF[iCasos][1])<=infoMHz03[i_a] && infoMHz03[i_a]<=(TF[iCasos][2]) && infoMHz01[i_a] <= infoMHz03[i_a] )
+				{
+			/*		
+					irstMHz=irstMHz+1;
+					rstMHz01[irstMHz]=infoMHz01[i_a];
+					rstMHz02[irstMHz]=infoMHz03[i_a];
+*/
+
+					
+				}
+		
+
+
+		}// FIN FOR
+		iCasos=0;
+
+
+		Rango01.value=rstMHz01[1];
+		Rango02.value=rstMHz01[2];
+		Rango03.value=rstMHz01[3];
+		Rango04.value=rstMHz01[4];
+		Rango05.value=rstMHz01[5];
+		Rango06.value=rstMHz01[6];
+		Rango07.value=rstMHz01[7];
+		Rango08.value=rstMHz01[8];
+		Rango09.value=rstMHz01[9];
+		Rango10.value=rstMHz01[10];
+		Rango11.value=rstMHz01[11];
+		Rango12.value=rstMHz01[12];
+		Rango13.value=rstMHz01[13];
+		Rango14.value=rstMHz01[14];
+		Rango15.value=rstMHz01[15];
+		Rango16.value=rstMHz01[16];
+		Rango17.value=rstMHz01[17];
+		Rango18.value=rstMHz01[18];
+		Rango19.value=rstMHz01[19];
+		Rango20.value=rstMHz01[20];
+		Rango21.value=rstMHz01[21];
+		
+		PWatts01.value=rstMHz02[1];
+		PWatts02.value=rstMHz02[2];
+		PWatts03.value=rstMHz02[3];
+		PWatts04.value=rstMHz02[4];
+		PWatts05.value=rstMHz02[5];
+		PWatts06.value=rstMHz02[6];
+		PWatts07.value=rstMHz02[7];
+		PWatts08.value=rstMHz02[8];
+		PWatts09.value=rstMHz02[9];
+		PWatts10.value=rstMHz02[10];
+		PWatts11.value=rstMHz02[11];
+		PWatts12.value=rstMHz02[12];
+		PWatts13.value=rstMHz02[13];
+		PWatts14.value=rstMHz02[14];
+		PWatts15.value=rstMHz02[15];
+		PWatts16.value=rstMHz02[16];
+		PWatts17.value=rstMHz02[17];
+		PWatts18.value=rstMHz02[18];
+		PWatts19.value=rstMHz02[19];
+		PWatts20.value=rstMHz02[20];
+		PWatts21.value=rstMHz02[21];
+		
+ 
+		PdBm01.value=rstMHz03[1];
+		PdBm02.value=rstMHz03[2];
+		PdBm03.value=rstMHz03[3];
+		PdBm04.value=rstMHz03[4];
+		PdBm05.value=rstMHz03[5];
+		PdBm06.value=rstMHz03[6];
+		PdBm07.value=rstMHz03[7];
+		PdBm08.value=rstMHz03[8];
+		PdBm09.value=rstMHz03[9];
+		PdBm10.value=rstMHz03[10];
+		PdBm11.value=rstMHz03[11];
+		PdBm12.value=rstMHz03[12];
+		PdBm13.value=rstMHz03[13];
+		PdBm14.value=rstMHz03[14];
+		PdBm15.value=rstMHz03[15];
+		PdBm16.value=rstMHz03[16];
+		PdBm17.value=rstMHz03[17];
+		PdBm18.value=rstMHz03[18];
+		PdBm19.value=rstMHz03[19];
+		PdBm20.value=rstMHz03[20];
+		PdBm21.value=rstMHz03[21];
+
+		LimdBm01.value=rstMHz04[1];
+		LimdBm02.value=rstMHz04[2];
+		LimdBm03.value=rstMHz04[3];
+		LimdBm04.value=rstMHz04[4];
+		LimdBm05.value=rstMHz04[5];
+		LimdBm06.value=rstMHz04[6];
+		LimdBm07.value=rstMHz04[7];
+		LimdBm08.value=rstMHz04[8];
+		LimdBm09.value=rstMHz04[9];
+		LimdBm10.value=rstMHz04[10];
+		LimdBm11.value=rstMHz04[11];
+		LimdBm12.value=rstMHz04[12];
+		LimdBm13.value=rstMHz04[13];
+		LimdBm14.value=rstMHz04[14];
+		LimdBm15.value=rstMHz04[15];
+		LimdBm16.value=rstMHz04[16];
+		LimdBm17.value=rstMHz04[17];
+		LimdBm18.value=rstMHz04[18];
+		LimdBm19.value=rstMHz04[19];
+		LimdBm20.value=rstMHz04[20];
+		LimdBm21.value=rstMHz04[21];
+ 
+		Est01.value=rstMHz05[1];
+		Est02.value=rstMHz05[2];
+		Est03.value=rstMHz05[3];
+		Est04.value=rstMHz05[4];
+		Est05.value=rstMHz05[5];
+		Est06.value=rstMHz05[6];
+		Est07.value=rstMHz05[7];
+		Est08.value=rstMHz05[8];
+		Est09.value=rstMHz05[9];
+		Est10.value=rstMHz05[10];
+		Est11.value=rstMHz05[11];
+		Est12.value=rstMHz05[12];
+		Est13.value=rstMHz05[13];
+		Est14.value=rstMHz05[14];
+		Est15.value=rstMHz05[15];
+		Est16.value=rstMHz05[16];
+		Est17.value=rstMHz05[17];
+		Est18.value=rstMHz05[18];
+		Est19.value=rstMHz05[19];
+		Est20.value=rstMHz05[20];
+		Est21.value=rstMHz05[21];
+
+
+		Crit01.value=rstMHz06[1];
+		Crit02.value=rstMHz06[2];
+		Crit03.value=rstMHz06[3];
+		Crit04.value=rstMHz06[4];
+		Crit05.value=rstMHz06[5];
+		Crit06.value=rstMHz06[6];
+		Crit07.value=rstMHz06[7];
+		Crit08.value=rstMHz06[8];
+		Crit09.value=rstMHz06[9];
+		Crit10.value=rstMHz06[10];
+		Crit11.value=rstMHz06[11];
+		Crit12.value=rstMHz06[12];
+		Crit13.value=rstMHz06[13];
+		Crit14.value=rstMHz06[14];
+		Crit15.value=rstMHz06[15];
+		Crit16.value=rstMHz06[16];
+		Crit17.value=rstMHz06[17];
+		Crit18.value=rstMHz06[18];
+		Crit19.value=rstMHz06[19];
+		Crit20.value=rstMHz06[20];
+		Crit21.value=rstMHz06[21];
+
+
+
+}// fin de funcion
+
+
+// fin de funcion
+
+        
+    </script>
+
+
+    </head>
+
+    <div class="container">
+
+    <body>
+
+        <img src="images/LogoH.PNG" class="img-thumbnail" alt="Responsive image" class="img-thumbnail">
+        <!--<img src="images/LogoH.PNG"
+                alt="Conversor de unidades TEXTO001"
+                width="268"
+                height="65">-->
+
+        <h1>Proyecto Web</h1>
+        <strong><nav>
+            <ul class="nav nav-pills">
+                <li><a class="nav-link " href="home.html">home </a></li>
+                <li><a class="nav-link active" href="analisisA25D.html">Analisis a) 25 d) </a></li>
+                <li><a class="nav-link " href="calculo.html">calculo </a></li>
+                <li><a class="nav-link " href="analisis11.html">Analisis Tabla 11 </a></li>
+
+            </ul>
+        </nav></strong>
+        <h2>Analisis</h2>
+       
+        <table class="table table-bordered table-striped">
+            <tr >
+            <th scope="row" colspan="6" >Ingreso de Informacion de Frecuencias</th></tr>
+            <th></th><th scope="row" colspan="2" > Frecuencia en [MHz]</th><th></th><th></th><th></th></tr>
+            <tr><th>N. linea</th> <th>Inicial </th>                                  <th>Final</th>                                      <th>Potencia</th>                                  <th>Unidades</th>                                                                                                                                                       <th>G. Ant. dBi</th>  </tr>
+            <tr><td>1</td>        <td><input type="text" id="fini01" value="0"/></td><td><input type="text" id="ffin01" value="0" /></td><td><input type="text" id="pot01" value="0" /></td><td><select id="unid01"><option value="1">Watt</option><option value="2">dbm</option><option value="3">dBuV/m</option><option value="4">dBuA/m</option>asd</select></td><td><input type="text" id="gant01" value="0" /></td></tr>
+            <tr><td>2</td>        <td><input type="text" id="fini02" value="0"/></td><td><input type="text" id="ffin02" value="0" /></td><td><input type="text" id="pot02" value="0" /></td><td><select id="unid02"><option value="1">Watt</option><option value="2">dbm</option><option value="3">dBuV/m</option><option value="4">dBuA/m</option>asd</select></td><td><input type="text" id="gant02" value="0" /></td></tr>
+            <tr><td>3</td>        <td><input type="text" id="fini03" value="0"/></td><td><input type="text" id="ffin03" value="0" /></td><td><input type="text" id="pot03" value="0" /></td><td><select id="unid03"><option value="1">Watt</option><option value="2">dbm</option><option value="3">dBuV/m</option><option value="4">dBuA/m</option>asd</select></td><td><input type="text" id="gant03" value="0" /></td></tr>
+            <tr><td>4</td>        <td><input type="text" id="fini04" value="0"/></td><td><input type="text" id="ffin04" value="0" /></td><td><input type="text" id="pot04" value="0" /></td><td><select id="unid04"><option value="1">Watt</option><option value="2">dbm</option><option value="3">dBuV/m</option><option value="4">dBuA/m</option>asd</select></td><td><input type="text" id="gant04" value="0" /></td></tr>
+            <tr><td>5</td>        <td><input type="text" id="fini05" value="0"/></td><td><input type="text" id="ffin05" value="0" /></td><td><input type="text" id="pot05" value="0" /></td><td><select id="unid05"><option value="1">Watt</option><option value="2">dbm</option><option value="3">dBuV/m</option><option value="4">dBuA/m</option>asd</select></td><td><input type="text" id="gant05" value="0" /></td></tr>
+            <tr><td>6</td>        <td><input type="text" id="fini06" value="0"/></td><td><input type="text" id="ffin06" value="0" /></td><td><input type="text" id="pot06" value="0" /></td><td><select id="unid06"><option value="1">Watt</option><option value="2">dbm</option><option value="3">dBuV/m</option><option value="4">dBuA/m</option>asd</select></td><td><input type="text" id="gant06" value="0" /></td></tr>
+            <tr><td>7</td>        <td><input type="text" id="fini07" value="0"/></td><td><input type="text" id="ffin07" value="0" /></td><td><input type="text" id="pot07" value="0" /></td><td><select id="unid07"><option value="1">Watt</option><option value="2">dbm</option><option value="3">dBuV/m</option><option value="4">dBuA/m</option>asd</select></td><td><input type="text" id="gant07" value="0" /></td></tr>
+            <tr><td>8</td>        <td><input type="text" id="fini08" value="0"/></td><td><input type="text" id="ffin08" value="0" /></td><td><input type="text" id="pot08" value="0" /></td><td><select id="unid08"><option value="1">Watt</option><option value="2">dbm</option><option value="3">dBuV/m</option><option value="4">dBuA/m</option>asd</select></td><td><input type="text" id="gant08" value="0" /></td></tr>
+            <tr><td>9</td>        <td><input type="text" id="fini09" value="0"/></td>      <td><input type="text" id="ffin09" value="0" /></td><td><input type="text" id="pot09" value="0" /></td><td><select id="unid09"><option value="1">Watt</option><option value="2">dbm</option><option value="3">dBuV/m</option><option value="4">dBuA/m</option>asd</select></td><td><input type="text" id="gant09" value="0" /></td></tr>
+
+        </table>
+
+
+        <td><button type="button" class="btn btn-primary" id="Exe01"  onclick="MetExe01()">Procesar</button> </td>
+    </br>
+</br>
+
+        <table class="table table-bordered table-striped">
+            <tr >
+            
+            <th scope="row" colspan="8" > Analisis de frecuencias</th></tr>
+            <tr><th>N. linea</th> <th>Rango </th>                                     <th>Potencia Watts </th>                           <th>Potencia dBm</th>                               <th>Limite dBm</th>                                <th>Estado</th>                                        <th>Criterio Inciso</th>                            <th>Seleccionar</th>      </tr>
+            <tr><td>1</td>        <td><input type="text" id="Rango01" value="0"/></td></td><td><input type="text" id="PWatts01" value="0"/></td><td><input type="text" id="PdBm01" value="0" /></td><td><input type="text" id="LimdBm01" value="0" /></td><td><input type="text" id="Est01" value="0" ></td><td><input type="text" id="Crit01" value="0" /></td><td><input type="checkbox" id="Sel01"  value="0"/></td></tr>
+            <tr><td>2</td>        <td><input type="text" id="Rango02" value="0"/></td></td><td><input type="text" id="PWatts02" value="0"/></td><td><input type="text" id="PdBm02" value="0" /></td><td><input type="text" id="LimdBm02" value="0" /></td><td><input type="text" id="Est02" value="0" ></td><td><input type="text" id="Crit02" value="0" /></td><td><input type="checkbox" id="Sel02" value="0" /></td></tr>
+            <tr><td>3</td>        <td><input type="text" id="Rango03" value="0"/></td></td><td><input type="text" id="PWatts03" value="0"/></td><td><input type="text" id="PdBm03" value="0" /></td><td><input type="text" id="LimdBm03" value="0" /></td><td><input type="text" id="Est03" value="0" ></td><td><input type="text" id="Crit03" value="0" /></td><td><input type="checkbox" id="Sel03" value="0" /></td></tr>
+            <tr><td>4</td>        <td><input type="text" id="Rango04" value="0"/></td></td><td><input type="text" id="PWatts04" value="0"/></td><td><input type="text" id="PdBm04" value="0" /></td><td><input type="text" id="LimdBm04" value="0" /></td><td><input type="text" id="Est04" value="0" ></td><td><input type="text" id="Crit04" value="0" /></td><td><input type="checkbox" id="Sel04" value="0" /></td></tr>
+            <tr><td>5</td>        <td><input type="text" id="Rango05" value="0"/></td></td><td><input type="text" id="PWatts05" value="0"/></td><td><input type="text" id="PdBm05" value="0" /></td><td><input type="text" id="LimdBm05" value="0" /></td><td><input type="text" id="Est05" value="0" ></td><td><input type="text" id="Crit05" value="0" /></td><td><input type="checkbox" id="Sel05" value="0" /></td></tr>
+            <tr><td>6</td>        <td><input type="text" id="Rango06" value="0"/></td></td><td><input type="text" id="PWatts06" value="0"/></td><td><input type="text" id="PdBm06" value="0" /></td><td><input type="text" id="LimdBm06" value="0" /></td><td><input type="text" id="Est06" value="0" ></td><td><input type="text" id="Crit06" value="0" /></td><td><input type="checkbox" id="Sel06" value="0" /></td></tr>
+            <tr><td>7</td>        <td><input type="text" id="Rango07" value="0"/></td></td><td><input type="text" id="PWatts07" value="0"/></td><td><input type="text" id="PdBm07" value="0" /></td><td><input type="text" id="LimdBm07" value="0" /></td><td><input type="text" id="Est07" value="0" ></td><td><input type="text" id="Crit07" value="0" /></td><td><input type="checkbox" id="Sel07" value="0" /></td></tr>
+            <tr><td>8</td>        <td><input type="text" id="Rango08" value="0"/></td></td><td><input type="text" id="PWatts08" value="0"/></td><td><input type="text" id="PdBm08" value="0" /></td><td><input type="text" id="LimdBm08" value="0" /></td><td><input type="text" id="Est08" value="0" ></td><td><input type="text" id="Crit08" value="0" /></td><td><input type="checkbox" id="Sel08" value="0" /></td></tr>
+            <tr><td>9</td>        <td><input type="text" id="Rango09" value="0"/></td></td><td><input type="text" id="PWatts09" value="0"/></td><td><input type="text" id="PdBm09" value="0" /></td><td><input type="text" id="LimdBm09" value="0" /></td><td><input type="text" id="Est09" value="0" ></td><td><input type="text" id="Crit09" value="0" /></td><td><input type="checkbox" id="Sel09" value="0" /></td></tr>
+            <tr><td>10</td>        <td><input type="text" id="Rango10" value="0"/></td></td><td><input type="text" id="PWatts10" value="0"/></td><td><input type="text" id="PdBm10" value="0" /></td><td><input type="text" id="LimdBm10" value="0" /></td><td><input type="text" id="Est10" value="0" ></td><td><input type="text" id="Crit10" value="0" /></td><td><input type="checkbox" id="Sel10" value="0" /></td></tr>
+            <tr><td>11</td>        <td><input type="text" id="Rango11" value="0"/></td></td><td><input type="text" id="PWatts11" value="0"/></td><td><input type="text" id="PdBm11" value="0" /></td><td><input type="text" id="LimdBm11" value="0" /></td><td><input type="text" id="Est11" value="0" ></td><td><input type="text" id="Crit11" value="0" /></td><td><input type="checkbox" id="Sel11" value="0" /></td></tr>
+            <tr><td>12</td>        <td><input type="text" id="Rango12" value="0"/></td></td><td><input type="text" id="PWatts12" value="0"/></td><td><input type="text" id="PdBm12" value="0" /></td><td><input type="text" id="LimdBm12" value="0" /></td><td><input type="text" id="Est12" value="0" ></td><td><input type="text" id="Crit12" value="0" /></td><td><input type="checkbox" id="Sel12" value="0" /></td></tr>
+            <tr><td>13</td>        <td><input type="text" id="Rango13" value="0"/></td></td><td><input type="text" id="PWatts13" value="0"/></td><td><input type="text" id="PdBm13" value="0" /></td><td><input type="text" id="LimdBm13" value="0" /></td><td><input type="text" id="Est13" value="0" ></td><td><input type="text" id="Crit13" value="0" /></td><td><input type="checkbox" id="Sel13" value="0" /></td></tr>
+            <tr><td>14</td>        <td><input type="text" id="Rango14" value="0"/></td></td><td><input type="text" id="PWatts14" value="0"/></td><td><input type="text" id="PdBm14" value="0" /></td><td><input type="text" id="LimdBm14" value="0" /></td><td><input type="text" id="Est14" value="0" ></td><td><input type="text" id="Crit14" value="0" /></td><td><input type="checkbox" id="Sel14" value="0" /></td></tr>
+            <tr><td>15</td>        <td><input type="text" id="Rango15" value="0"/></td></td><td><input type="text" id="PWatts15" value="0"/></td><td><input type="text" id="PdBm15" value="0" /></td><td><input type="text" id="LimdBm15" value="0" /></td><td><input type="text" id="Est15" value="0" ></td><td><input type="text" id="Crit15" value="0" /></td><td><input type="checkbox" id="Sel15" value="0" /></td></tr>
+            <tr><td>16</td>        <td><input type="text" id="Rango16" value="0"/></td></td><td><input type="text" id="PWatts16" value="0"/></td><td><input type="text" id="PdBm16" value="0" /></td><td><input type="text" id="LimdBm16" value="0" /></td><td><input type="text" id="Est16" value="0" ></td><td><input type="text" id="Crit16" value="0" /></td><td><input type="checkbox" id="Sel16" value="0" /></td></tr>
+            <tr><td>17</td>        <td><input type="text" id="Rango17" value="0"/></td></td><td><input type="text" id="PWatts17" value="0"/></td><td><input type="text" id="PdBm17" value="0" /></td><td><input type="text" id="LimdBm17" value="0" /></td><td><input type="text" id="Est17" value="0" ></td><td><input type="text" id="Crit17" value="0" /></td><td><input type="checkbox" id="Sel17" value="0" /></td></tr>
+            <tr><td>18</td>        <td><input type="text" id="Rango18" value="0"/></td></td><td><input type="text" id="PWatts18" value="0"/></td><td><input type="text" id="PdBm18" value="0" /></td><td><input type="text" id="LimdBm18" value="0" /></td><td><input type="text" id="Est18" value="0" ></td><td><input type="text" id="Crit18" value="0" /></td><td><input type="checkbox" id="Sel18" value="0" /></td></tr>
+            <tr><td>19</td>        <td><input type="text" id="Rango19" value="0"/></td></td><td><input type="text" id="PWatts19" value="0"/></td><td><input type="text" id="PdBm19" value="0" /></td><td><input type="text" id="LimdBm19" value="0" /></td><td><input type="text" id="Est19" value="0" ></td><td><input type="text" id="Crit19" value="0" /></td><td><input type="checkbox" id="Sel19" value="0" /></td></tr>
+            <tr><td>20</td>        <td><input type="text" id="Rango20" value="0"/></td></td><td><input type="text" id="PWatts20" value="0"/></td><td><input type="text" id="PdBm20" value="0" /></td><td><input type="text" id="LimdBm20" value="0" /></td><td><input type="text" id="Est20" value="0" ></td><td><input type="text" id="Crit20" value="0" /></td><td><input type="checkbox" id="Sel20" value="0" /></td></tr>
+            <tr><td>21</td>        <td><input type="text" id="Rango21" value="0"/></td></td><td><input type="text" id="PWatts21" value="0"/></td><td><input type="text" id="PdBm21" value="0" /></td><td><input type="text" id="LimdBm21" value="0" /></td><td><input type="text" id="Est21" value="0" ></td><td><input type="text" id="Crit21" value="0" /></td><td><input type="checkbox" id="Sel21" value="0" /></td></tr>
+
+        </table>
+
+ 
+       
+        <div class="form-group">
+            <label for="Textarea1">Rangos de Frecuencia</label>
+            <textarea class="form-control" id="textbox1"  rows="21">"texto de ejemplo frecuencias"</textarea>
+        </div>
+
+        <script>
+                function generate()
+                {  
+                    //Creando contenido del cuadro de texto
+                    var itext="Contenido 01";
+
+                    itext="Rango de frecuencia ; Potencia [W] ; Potencia [dBm] ; Limite [dBm] ; Estado ; Criterio" + "\n";
+
+                    if (Sel01.checked )
+                    {itext=itext + Rango01.value +";"+ PWatts01.value +";"+ PdBm01.value + ";" + LimdBm01.value + ";" + Est01.value + ";" + Crit01.value +";" + "\n";}
+                    if (Sel02.checked )
+                    {itext=itext + Rango02.value +";"+ PWatts02.value +";"+ PdBm02.value + ";" + LimdBm02.value + ";" + Est02.value + ";" + Crit02.value +";" + "\n";}
+                    if (Sel03.checked )
+                    {itext=itext + Rango03.value +";"+ PWatts03.value +";"+ PdBm03.value + ";" + LimdBm03.value + ";" + Est03.value + ";" + Crit03.value +";" + "\n";}
+                    if (Sel04.checked )
+                    {itext=itext + Rango04.value +";"+ PWatts04.value +";"+ PdBm04.value + ";" + LimdBm04.value + ";" + Est04.value + ";" + Crit04.value +";" + "\n";}
+                    if (Sel05.checked )
+                    {itext=itext + Rango05.value +";"+ PWatts05.value +";"+ PdBm05.value + ";" + LimdBm05.value + ";" + Est05.value + ";" + Crit05.value +";" + "\n";}
+                    if (Sel06.checked )
+                    {itext=itext + Rango06.value +";"+ PWatts06.value +";"+ PdBm06.value + ";" + LimdBm06.value + ";" + Est06.value + ";" + Crit06.value +";" + "\n";}
+                    if (Sel07.checked )
+                    {itext=itext + Rango07.value +";"+ PWatts07.value +";"+ PdBm07.value + ";" + LimdBm07.value + ";" + Est07.value + ";" + Crit07.value +";" + "\n";}
+                    if (Sel08.checked )
+                    {itext=itext + Rango08.value +";"+ PWatts08.value +";"+ PdBm08.value + ";" + LimdBm08.value + ";" + Est08.value + ";" + Crit08.value +";" + "\n";}
+                    if (Sel09.checked )
+                    {itext=itext + Rango09.value +";"+ PWatts09.value +";"+ PdBm09.value + ";" + LimdBm09.value + ";" + Est09.value + ";" + Crit09.value +";" + "\n";}
+                    if (Sel10.checked )
+                    {itext=itext + Rango10.value +";"+ PWatts10.value +";"+ PdBm10.value + ";" + LimdBm10.value + ";" + Est10.value + ";" + Crit10.value +";" + "\n";}
+                    if (Sel11.checked )
+                    {itext=itext + Rango11.value +";"+ PWatts11.value +";"+ PdBm11.value + ";" + LimdBm11.value + ";" + Est11.value + ";" + Crit11.value +";" + "\n";}
+                    if (Sel12.checked )
+                    {itext=itext + Rango12.value +";"+ PWatts12.value +";"+ PdBm12.value + ";" + LimdBm12.value + ";" + Est12.value + ";" + Crit12.value +";" + "\n";}
+                    if (Sel13.checked )
+                    {itext=itext + Rango13.value +";"+ PWatts13.value +";"+ PdBm13.value + ";" + LimdBm13.value + ";" + Est13.value + ";" + Crit13.value +";" + "\n";}
+                    if (Sel14.checked )
+                    {itext=itext + Rango14.value +";"+ PWatts14.value +";"+ PdBm14.value + ";" + LimdBm14.value + ";" + Est14.value + ";" + Crit14.value +";" + "\n";}
+                    if (Sel15.checked )
+                    {itext=itext + Rango15.value +";"+ PWatts15.value +";"+ PdBm15.value + ";" + LimdBm15.value + ";" + Est15.value + ";" + Crit15.value +";" + "\n";}
+                    if (Sel16.checked )
+                    {itext=itext + Rango16.value +";"+ PWatts16.value +";"+ PdBm16.value + ";" + LimdBm16.value + ";" + Est16.value + ";" + Crit16.value +";" + "\n";}
+                    if (Sel17.checked )
+                    {itext=itext + Rango17.value +";"+ PWatts17.value +";"+ PdBm17.value + ";" + LimdBm17.value + ";" + Est17.value + ";" + Crit17.value +";" + "\n";}
+                    if (Sel18.checked )
+                    {itext=itext + Rango18.value +";"+ PWatts18.value +";"+ PdBm18.value + ";" + LimdBm18.value + ";" + Est18.value + ";" + Crit18.value +";" + "\n";}
+                    if (Sel19.checked )
+                    {itext=itext + Rango19.value +";"+ PWatts19.value +";"+ PdBm19.value + ";" + LimdBm19.value + ";" + Est19.value + ";" + Crit19.value +";" + "\n";}
+                    if (Sel20.checked )
+                    {itext=itext + Rango20.value +";"+ PWatts20.value +";"+ PdBm20.value + ";" + LimdBm20.value + ";" + Est20.value + ";" + Crit20.value +";" + "\n";}
+                    if (Sel21.checked )
+                    {itext=itext + Rango21.value +";"+ PWatts21.value +";"+ PdBm21.value + ";" + LimdBm21.value + ";" + Est21.value + ";" + Crit21.value +";" + "\n";}
+                    
+                    
+
+
+
+
+
+
+
+                    textbox1.value=itext;
+                }
+        </script>
+        
+
+
+        <td><button type="button" class="btn btn-primary"  onclick="generate()">Generar</button> </td>
+        
+        
+        
+        <td><button type="button" class="btn btn-primary"  onclick="download('test.txt',  document.getElementById('textbox1').value)">Guardar CSV</button> </td>
+     
+
+    
+    </body>
+    </div>
+
+
+
+
+    </html>
